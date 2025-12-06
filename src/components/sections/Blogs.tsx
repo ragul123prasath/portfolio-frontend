@@ -1,31 +1,48 @@
-export default async function Blogs() {
-  const res = await fetch("http://localhost:5000/api/blogs", {
-    next: { revalidate: 10 },
-  });
-  const blogs = await res.json();
+"use client";
+
+import { useEffect, useState } from "react";
+
+type Blog = {
+  _id: string;
+  title: string;
+  description: string;
+};
+
+export default function Blogs() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+
+  useEffect(() => {
+    async function loadBlogs() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/blogs`,
+          { cache: "no-cache" }
+        );
+        const data = await res.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error("Failed to load blogs", error);
+      }
+    }
+
+    loadBlogs();
+  }, []);
 
   return (
-    <section id="blogs" className="py-20 px-6 bg-gray-50">
+    <section id="blogs" className="py-20 px-6 bg-white">
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-10">
         Blogs
       </h2>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {blogs.map((blog) => (
+      <div className="max-w-5xl mx-auto grid max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {blogs.map((blog: Blog) => (
           <div
             key={blog._id}
             data-aos="fade-up"
-            className="bg-white p-6 rounded-lg shadow-md border hover:shadow-xl transition"
+            className="p-6 bg-gray-100 rounded-xl shadow"
           >
             <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-            <p className="text-gray-600 mb-3">{blog.description}</p>
-
-            <a
-              href={`/blogs/${blog._id}`}
-              className="text-blue-600 font-medium"
-            >
-              Read More →
-            </a>
+            <p className="text-gray-600">{blog.description}</p>
           </div>
         ))}
       </div>
