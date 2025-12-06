@@ -1,48 +1,53 @@
-
-
 export default function Services() {
   const services = [
     {
-      title: "Full-Stack Web Development",
+      title: "Full-Stack Development",
       description:
-        "I build responsive, scalable, and user-friendly full-stack applications using MERN stack.",
-      tools: "React, Next.js, Node.js, Express, MongoDB",
+        "Building modern web applications using MERN stack, REST APIs, databases, and cloud deployment.",
     },
     {
-      title: "Java / Spring Boot Development",
+      title: "Frontend Development",
       description:
-        "I design and develop REST APIs, microservices, and enterprise backend systems.",
-      tools: "Java, Spring Boot, MySQL, PostgreSQL, REST API",
+        "Creating responsive, user-friendly interfaces using React, Next.js, Tailwind CSS, and TypeScript.",
     },
     {
-      title: "DevOps & Cloud Deployment",
+      title: "Backend Development",
       description:
-        "I configure CI/CD pipelines, automation scripts, and deploy applications on cloud.",
-      tools: "AWS, Docker, GitHub Actions, Linux, Nginx",
+        "Developing secure and scalable backend systems using Node.js, Express.js, MongoDB, and authentication.",
+    },
+    {
+      title: "Java & Spring Boot Development",
+      description:
+        "Building APIs, services, and enterprise-grade backend systems using Spring Boot & Hibernate.",
+    },
+    {
+      title: "DevOps & Cloud",
+      description:
+        "Basic CI/CD, Docker usage, AWS services setup, and cloud deployment strategies.",
+    },
+    {
+      title: "API Integration",
+      description:
+        "Integrating 3rd-party APIs, authentication systems, and secure API communication.",
     },
   ];
 
   return (
     <section id="services" className="py-20 px-6 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+      <h2 className="text-3xl font-bold text-center text-blue-600 mb-10">
         Services
       </h2>
 
-      <p className="text-center text-gray-600 mb-10">
-        Here are the services I offer to help build and grow your projects.
-      </p>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {services.map((service) => (
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map((service, index) => (
           <div
-            key={service.title}
+            key={index}
             className="bg-white p-6 rounded-xl shadow-md border hover:shadow-xl transition"
           >
-            <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
-            <p className="text-gray-600 mb-4">{service.description}</p>
-            <p className="text-sm text-gray-800">
-              <span className="font-semibold">Tools:</span> {service.tools}
-            </p>
+            <h3 className="text-xl font-semibold mb-3 text-gray-800">
+              {service.title}
+            </h3>
+            <p className="text-gray-600">{service.description}</p>
           </div>
         ))}
       </div>

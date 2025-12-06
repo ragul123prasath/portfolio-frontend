@@ -1,45 +1,38 @@
-
-
 export default function Skills() {
   const skills = [
-    {
-      category: "Frontend",
-      items: ["HTML", "CSS", "JavaScript", "React", "Next.js", "Tailwind CSS"],
-    },
-    {
-      category: "Backend",
-      items: ["Node.js", "Express.js", "MongoDB", "MySQL", "PostgreSQL", "Java", "Spring Boot"],
-    },
-    {
-      category: "Tools & Others",
-      items: ["Git", "GitHub", "Docker", "AWS", "Postman", "VS Code", "Linux"],
-    },
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "Git & GitHub",
+    "Tailwind CSS",
+    "Java",
+    "Spring Boot",
+    "MySQL",
+    "PostgreSQL",
+    "AWS Basics",
+    "Docker Basics",
   ];
 
   return (
-    <section id="skills" className="py-20 px-6 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+    <section id="skills" className="py-20 px-6 bg-white">
+      <h2 className="text-3xl font-bold text-center text-blue-600 mb-10">
         Skills
       </h2>
 
-      <p className="text-center text-gray-600 mb-10">
-        Here are the technologies and tools I work with.
-      </p>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {skills.map((skillGroup) => (
+      <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        {skills.map((skill, index) => (
           <div
-            key={skillGroup.category}
-            className="bg-white p-6 rounded-xl shadow-md border hover:shadow-xl transition"
+            key={index}
+            className="p-4 bg-gray-100 text-center rounded-lg shadow hover:shadow-md transition"
           >
-            <h3 className="text-xl font-semibold mb-4">{skillGroup.category}</h3>
-            <ul className="space-y-2 text-gray-700">
-              {skillGroup.items.map((skill) => (
-                <li key={skill} className="flex items-center gap-2">
-                  <span className="text-blue-600 text-lg">•</span> {skill}
-                </li>
-              ))}
-            </ul>
+            <p className="text-lg font-medium text-gray-700">{skill}</p>
           </div>
         ))}
       </div>

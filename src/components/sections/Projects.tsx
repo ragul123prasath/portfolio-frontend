@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 
 type Project = {
   _id: string;
@@ -11,56 +11,84 @@ type Project = {
 };
 
 export default function Projects() {
-  const projects: Project[] = [
-    {
-      _id: "1",
-      title: "Portfolio Website",
-      description: "Modern portfolio built with Next.js & Tailwind CSS",
-      image: "/project1.png",
-      link: "#",
-    },
-    {
-      _id: "2",
-      title: "API Backend",
-      description: "Node + Express + MongoDB backend with authentication",
-      image: "/project2.png",
-      link: "#",
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/projects`,
+          { cache: "no-store" }
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch projects");
+        }
+
+        const data = await res.json();
+        setProjects(data);
+      } catch (err) {
+        console.error("Projects Fetch Error:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+
+    loadProjects();
+  }, []);
 
   return (
-    <section id="projects" className="py-20 px-6 bg-gray-50">
+    <section id="projects" className="py-20 px-6 bg-white">
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-10">
         Projects
       </h2>
 
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {projects.map((project: Project) => (
+      {loading && (
+        <p className="text-center text-gray-500">Loading projects...</p>
+      )}
+
+      {!loading && projects.length === 0 && (
+        <p className="text-center text-gray-500">No projects found.</p>
+      )}
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+        {projects.map((project) => (
           <div
             key={project._id}
-            className="bg-white p-6 rounded-xl shadow-md border hover:shadow-xl transition"
+            className="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
             data-aos="fade-up"
           >
-            <h3 className="text-xl font-semibold">{project.title}</h3>
-            <p className="text-gray-600 mt-2">{project.description}</p>
-
+            {/* Project Image */}
             {project.image && (
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full rounded-lg mt-4"
+                className="w-full h-48 object-cover"
               />
             )}
 
-            {project.link && (
-              <a
-                href={project.link}
-                className="block mt-4 text-blue-600 font-semibold"
-                target="_blank"
-              >
-                View Project →
-              </a>
-            )}
+            <div className="p-5">
+              <h3 className="text-xl font-semibold text-gray-800">
+                {project.title}
+              </h3>
+
+              <p className="text-gray-600 mt-2">
+                {project.description}
+              </p>
+
+              {/* Project Link */}
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-block text-blue-600 hover:underline"
+                >
+                  View Project →
+                </a>
+              )}
+            </div>
           </div>
         ))}
       </div>

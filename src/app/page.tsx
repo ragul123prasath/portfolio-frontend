@@ -1,3 +1,4 @@
+// app/page.tsx
 import About from "@/components/sections/About";
 import Projects from "@/components/sections/Projects";
 import Services from "@/components/sections/Services";
@@ -8,13 +9,8 @@ import Blogs from "@/components/sections/Blogs";
 import Testimonials from "@/components/sections/Testimonials";
 import Experience from "@/components/sections/Experience";
 
-// If Testimonials needs data from backend:
-import { getTestimonials } from "@/lib/api";
-
-export default async function Home() {
-  // Fetch testimonials from backend API
-  const testimonials = await getTestimonials();
-
+// ❌ REMOVE async and data fetching – this must be a pure SERVER component
+export default function Home() {
   return (
     <main>
       {/* HERO SECTION */}
@@ -38,7 +34,7 @@ export default async function Home() {
       <Services />
       <Blogs />
 
-      
+      {/* Testimonials will fetch its own data client-side */}
       <Testimonials />
 
       <Experience />
