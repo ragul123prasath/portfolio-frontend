@@ -8,9 +8,10 @@ export default function Testimonials() {
   useEffect(() => {
     async function loadData() {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/testimonials`
-        );
+       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`, {
+  cache: "no-store",
+});
+
         const data = await res.json();
         setTestimonials(data);
       } catch (err) {
