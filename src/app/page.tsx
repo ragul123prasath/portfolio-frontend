@@ -39,7 +39,7 @@ export default async function Home() {
       <Blogs />
 
       {/* Pass testimonials into the Testimonials component */}
-      <Testimonials testimonials={testimonials || []} />
+      <Testimonials />
 
       <Experience />
       <Contact />
