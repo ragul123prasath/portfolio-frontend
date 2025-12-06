@@ -2,37 +2,19 @@
 
 import { useEffect, useState } from "react";
 
-interface Testimonial {
-  _id: string;
-  name: string;
-  message: string;
-  role?: string;
-}
-
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
     async function loadData() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/testimonials`,
-          { cache: "no-store" }  // prevent Vercel SSR cache issues
+          `${process.env.NEXT_PUBLIC_API_URL}/testimonials`
         );
-
-        if (!res.ok) {
-          console.error("Failed to fetch testimonials:", res.status);
-          setLoading(false);
-          return;
-        }
-
         const data = await res.json();
-        setTestimonials(Array.isArray(data) ? data : []);
+        setTestimonials(data);
       } catch (err) {
         console.error("Error loading testimonials:", err);
-      } finally {
-        setLoading(false);
       }
     }
 
@@ -45,27 +27,21 @@ export default function Testimonials() {
         Testimonials
       </h2>
 
-      {loading ? (
-        <p className="text-center text-gray-500">Loading testimonials...</p>
-      ) : testimonials.length === 0 ? (
-        <p className="text-center text-gray-500">No testimonials available.</p>
-      ) : (
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {testimonials.map((t) => (
-            <div
-              key={t._id}
-              className="bg-white p-6 rounded-xl shadow-md border hover:shadow-xl transition"
-            >
-              <p className="text-gray-700 italic mb-4">“{t.message}”</p>
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        {testimonials.map((t) => (
+          <div
+            key={t._id}
+            className="bg-white p-6 rounded-xl shadow-md border hover:shadow-xl transition"
+          >
+            <p className="text-gray-700 italic mb-4">“{t.message}”</p>
 
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold">{t.name}</h3>
-                <p className="text-sm text-gray-500">{t.role ?? "User"}</p>
-              </div>
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold">{t.name}</h3>
+              <p className="text-sm text-gray-500">{t.role}</p>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
