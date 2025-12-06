@@ -38,7 +38,7 @@ export default async function Home() {
       <Services />
       <Blogs />
 
-      {/* Pass testimonials into the Testimonials component */}
+      
       <Testimonials />
 
       <Experience />

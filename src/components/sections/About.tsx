@@ -1,3 +1,5 @@
+
+
 import { fetchData } from "@/lib/api";
 
 export default async function About() {
