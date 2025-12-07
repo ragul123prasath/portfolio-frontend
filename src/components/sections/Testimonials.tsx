@@ -16,7 +16,7 @@ export default function Testimonials() {
     async function loadData() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`,
+          `${process.env.NEXT_PUBLIC_API_URL}/testimonials`,
           { cache: "no-store" }
         );
 
