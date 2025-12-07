@@ -2,17 +2,27 @@
 
 import { useEffect, useState } from "react";
 
+type Testimonial = {
+  _id: string;
+  name: string;
+  message: string;
+  role?: string;
+};
+
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
     async function loadData() {
       try {
-       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimonials`, {
-  cache: "no-store",
-});
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/testimonials`,
+          { cache: "no-store" }
+        );
 
-        const data = await res.json();
+        if (!res.ok) throw new Error("Failed to fetch testimonials");
+
+        const data: Testimonial[] = await res.json();
         setTestimonials(data);
       } catch (err) {
         console.error("Error loading testimonials:", err);
