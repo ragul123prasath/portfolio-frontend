@@ -6,6 +6,7 @@ type Blog = {
   _id: string;
   title: string;
   description: string;
+  image?: string;
 };
 
 export default function Blogs() {
@@ -16,7 +17,7 @@ export default function Blogs() {
     async function loadBlogs() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/blogs`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/blogs`,
           { cache: "no-store" }
         );
 
@@ -34,31 +35,40 @@ export default function Blogs() {
     loadBlogs();
   }, []);
 
+  if (loading) {
+    return <p className="text-center mt-10">Loading blogs…</p>;
+  }
+
   return (
-    <section id="blogs" className="py-20 px-6 bg-white">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-10">
+    <section className="py-20 px-6 max-w-4xl mx-auto">
+      <h1 className="text-4xl font-bold text-blue-600 mb-10 text-center">
         Blogs
-      </h2>
+      </h1>
 
-      {/* Loading State */}
-      {loading && (
-        <p className="text-center text-gray-500">Loading blogs...</p>
-      )}
-
-      {/* Empty State */}
-      {!loading && blogs.length === 0 && (
-        <p className="text-center text-gray-500">No blogs found.</p>
-      )}
-
-      <div className="max-w-6xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog: Blog) => (
+      <div className="grid gap-8 md:grid-cols-2">
+        {blogs.map((blog) => (
           <div
             key={blog._id}
-            data-aos="fade-up"
-            className="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition"
+            className="p-6 border rounded-lg shadow hover:shadow-lg transition"
           >
-            <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-            <p className="text-gray-600">{blog.description}</p>
+            <h2 className="text-2xl font-bold mb-2">{blog.title}</h2>
+
+            {blog.image && (
+              <img
+                src={blog.image}
+                alt={blog.title}
+                className="rounded-lg mb-3 w-full"
+              />
+            )}
+
+            <p className="text-gray-700">{blog.description}</p>
+
+            <a
+              href={`/blogs/${blog._id}`}
+              className="text-blue-600 font-semibold mt-2 inline-block"
+            >
+              Read More →
+            </a>
           </div>
         ))}
       </div>

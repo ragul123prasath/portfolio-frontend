@@ -18,7 +18,7 @@ export default function Projects() {
     async function loadProjects() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/projects`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/projects`,
           { cache: "no-store" }
         );
 
