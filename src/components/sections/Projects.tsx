@@ -18,7 +18,7 @@ export default function Projects() {
     async function loadProjects() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/projects`,
+          `${process.env.NEXT_PUBLIC_API_URL}/projects`, 
           { cache: "no-store" }
         );
 
@@ -57,9 +57,7 @@ export default function Projects() {
           <div
             key={project._id}
             className="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
-            data-aos="fade-up"
           >
-            {/* Project Image */}
             {project.image && (
               <img
                 src={project.image}
@@ -73,11 +71,8 @@ export default function Projects() {
                 {project.title}
               </h3>
 
-              <p className="text-gray-600 mt-2">
-                {project.description}
-              </p>
+              <p className="text-gray-600 mt-2">{project.description}</p>
 
-              {/* Project Link */}
               {project.link && (
                 <a
                   href={project.link}
