@@ -17,7 +17,7 @@ export default function Blogs() {
     async function loadBlogs() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/blogs`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/blogs`,
           { cache: "no-store" }
         );
 
