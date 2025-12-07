@@ -8,7 +8,7 @@ export default function Testimonials() {
   useEffect(() => {
     async function loadData() {
       try {
-       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/testimonials`, {
+       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimonials`, {
   cache: "no-store",
 });
 
